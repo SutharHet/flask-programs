@@ -1,0 +1,21 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Dashboard</title>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+{% block body %}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="add-note">+</div>
+    <div>
+      <button id="logout">LOG OUT</button>
+    </div>
+    <div id="profile"><span></span></div>
+  </header>
+
+  <div class="container">
+    
+  </div>
+{% endblock %}

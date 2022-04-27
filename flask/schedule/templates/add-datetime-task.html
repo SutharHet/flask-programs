@@ -1,0 +1,27 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Note</title>
+  <script src="{{ url_for('static', filename='js/add-datetime-task.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add-datetime-task.css') }}">
+{% endblock %}
+{% block body%}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="profile"><span></span></div>
+  </header>
+
+<!--  ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'] -->
+
+  <div class="container">
+    
+    <div class="time-input-div">
+      <label for="start-datetime">Start DateTime : </label>
+      <input type="datetime-local" id="start-datetime"><br>
+      <label for="end-datetime">End DateTime : </label>
+      <input type="datetime-local" id="end-datetime"><br>
+    </div>
+    <textarea id="task" placeholder="Enter Task"></textarea><br>
+    <button id="add">ADD</button>
+  </div>
+{% endblock %}

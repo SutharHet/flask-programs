@@ -1,0 +1,140 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --l4blue: #1A374D;
+  --l3blue: #406882;
+  --l2blue: #6998AB;
+  --l1blue: #B1D0E0;
+}
+/* 
+@media screen and (max-width: 330px){
+  html{
+      width: 330px;
+      overflow: hidden;
+  }
+}
+@media screen and (max-height: 500px){
+  html{
+      height: 500px;
+      overflow: hidden;
+  }
+} */
+
+/* html {
+  
+} */
+
+body{
+  background-color: var(--l2blue);
+  min-width: 400px;
+  min-height: 400px;
+}
+
+header {
+  width: 100%;
+  height: 65px;
+  background-color: var(--l3blue);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2;
+}
+.main-header{
+  width: 200px;
+  height: 60px;
+  border: none;
+  /* background-color: white; */
+  position: fixed;
+  top: 4px;
+  left: 10px;
+  color: var(--l1blue);
+  font-size: 50px;
+}
+
+.container {
+  height: 300px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: var(--l1blue);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.login-form{
+  margin-top: 45px;
+  margin-left: 48px;
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid var(--l3blue);
+  height: 30px;
+  width: 90%;
+  margin-top: 20px;
+  color: var(--l4blue);
+  background-color: var(--l1blue);
+  font-size: 15px;
+}
+input::placeholder{
+  color: var(--l4blue);
+}
+input:focus{
+  outline: none;
+  /* background-color: var(--l2blue); */
+  color: var(--l4blue);
+}
+
+#login {
+  height:40px;
+  width: 90%;
+  margin-top: 30px;
+  color: white;
+  background-color: var(--l2blue);
+  border: none;
+  font-size: 20px;
+  cursor:pointer; 
+}
+#login:hover {
+  background-color: var(--l3blue);
+}
+#login:focus {
+  background-color: var(--l4blue);
+}
+
+#signup-link{
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 150px;
+  color: var(--l3blue);
+}
+
+#forgot-password{
+  font-size: 20px;
+  margin-left: 150px;
+  color: var(--l3blue);
+}
+
+.validation-msg {
+  height: 30px;
+  width: 85%;
+  margin-top: 50px;
+  color: red;
+  background-color: #FF9988;
+  border: 3px solid red; 
+  font-size: 16px;
+  padding: 10px;
+  font-weight: 600;
+  /* overflow-x: hidden; */
+}
+ul{
+  margin-top: 5px;
+  margin-left: 20px;
+}

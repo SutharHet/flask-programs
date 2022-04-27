@@ -1,0 +1,19 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Note</title>
+  <script src="{{ url_for('static', filename='js/add-note.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add-note.css') }}">
+{% endblock %}
+{% block body%}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="profile"><span></span></div>
+  </header>
+
+  <div class="container">
+    <input type="text" id="title" placeholder="Title"><br>
+    <textarea id="note" placeholder="Note"></textarea><br>
+    <button id="add">ADD</button>
+  </div>
+{% endblock %}

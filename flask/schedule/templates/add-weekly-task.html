@@ -1,0 +1,38 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Task</title>
+  <script src="{{ url_for('static', filename='js/add-weekly-task.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add-weekly-task.css') }}">
+  
+{% endblock %}
+{% block body%}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="profile"><span></span></div>
+  </header>
+
+<!--  ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'] -->
+
+  <div class="container">
+    <div class="container-top">
+      <select data-placeholder="Select days..." id="days" class="chosen-select" multiple>
+        <option value="sunday">Sunday</option>
+        <option value="monday">Monday</option>
+        <option value="tuesday">Tuesday</option>
+        <option value="wednesday">Wednesday</option>
+        <option value="thursday">Thursday</option>
+        <option value="friday">Friday</option>
+        <option value="saturday">Saturday</option>
+      </select><br>
+      <div class="time-input-div">
+        <label for="start-time">Start Time : </label>
+        <input type="time" id="start-time" placeholder="00:00"><br>
+        <label for="end-time">End Time : </label>
+        <input type="time" id="end-time" placeholder="End Time"><br>
+      </div>
+    </div>
+    <textarea id="task" placeholder="Enter Task"></textarea><br>
+    <button id="add">ADD</button>
+  </div>
+{% endblock %}

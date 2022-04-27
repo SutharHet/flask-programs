@@ -1,0 +1,43 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Dashboard</title>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+{% block body %}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="add-weekly-task">Add Weekly Task</div>
+    <div id="add-datetime-task">Add Datetime Task</div>
+    <div id="datetime-dashboard">Datetime Dashboard</div>
+    <div>
+      <button id="logout">LOG OUT</button>
+    </div>
+    <div id="profile"><span></span></div>
+  </header>
+  
+  <div id="filter">
+    <select data-placeholder="Select days..." id="days" class="chosen-select" multiple>
+      <option value="sunday">Sunday</option>
+      <option value="monday">Monday</option>
+      <option value="tuesday">Tuesday</option>
+      <option value="wednesday">Wednesday</option>
+      <option value="thursday">Thursday</option>
+      <option value="friday">Friday</option>
+      <option value="saturday">Saturday</option>
+    </select>
+    <br>
+    
+    <button id="clear-btn">Clear</button>
+    <button id="filter-btn">Filter</button>
+  </div>
+
+  <div id="sunday-tasks" class="container"><h3>SUNDAY TASKS: </h3></div>
+  <div id="monday-tasks" class="container"><h3>MONDAY TASKS: </h3></div>
+  <div id="tuesday-tasks" class="container"><h3>TUESDAY TASKS: </h3></div>
+  <div id="wednesday-tasks" class="container"><h3>WEDNESDAY TASKS: </h3></div>
+  <div id="thursday-tasks" class="container"><h3>THURSDAY TASKS: </h3></div>
+  <div id="friday-tasks" class="container"><h3>FRIDAY TASKS: </h3></div>
+  <div id="saturday-tasks" class="container"><h3>SATURDAY TASKS: </h3></div>
+{% endblock %}

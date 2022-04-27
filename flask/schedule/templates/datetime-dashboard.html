@@ -1,0 +1,35 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Dashboard</title>
+  <script src="{{ url_for('static', filename='js/datetime-dashboard.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/datetime-dashboard.css') }}">
+{% endblock %}
+{% block body %}
+  <header>
+    <div class="main-header">DEMO</div>
+    <div id="add-weekly-task">Add Weekly Task</div>
+    <div id="add-datetime-task">Add Datetime Task</div>
+    <div id="dashboard">Dashboard</div>
+    <div>
+      <button id="logout">LOG OUT</button>
+    </div>
+    <div id="profile"><span></span></div>
+  </header>
+  <div id="filter">
+    <label>Start : </label>
+    <input type="date" id="start_date" required='true'>
+    <input type="time" id="start_time">
+    <br>
+    <label>End : </label>
+    <input type="date" id="end_date">
+    <input type="time" id="end_time">
+    <br>
+    
+    <button id="clear-btn">Clear</button>
+    <button id="filter-btn">Filter</button>
+  </div>
+  <div class="container">
+    
+  </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>Log In</title>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+  <header>
+    <div class="main-header">DEMO</div>
+  </header>
+
+  <div class="container">
+    <div class="login-form">
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button id="login">LOG IN</button>
+      <a href="http://127.0.0.1:5000/signup" id="signup-link">Create an account?</a><br>
+      <a href="http://127.0.0.1:5000/forgot-password" id="forgot-password">Forgot Password?</a><br>
+      <div class="validation-msg">
+        <ul>
+          <li id="error-msg"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

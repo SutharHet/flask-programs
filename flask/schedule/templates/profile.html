@@ -1,0 +1,47 @@
+{% extends 'base-template.html'%}
+
+{% block head %}
+  <title>profile</title>
+  <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+{% block body %}
+  <h1 id="msg"></h1>
+  <header>
+    <div class="main-header">DEMO</div>
+    <div>
+      <button id="logout">LOG OUT</button>
+    </div>
+    <div id="profile"><span></span></div>
+  </header>
+
+  <div class="container">
+    <div id="profile-pic"><span></span></div>
+    <div id="profile-data">
+      <table>
+        <tr>
+          <td><label for="username">Username : </label></td>
+          <td colspan="3"><input type="text" id="username" placeholder="Username"></td>
+        </tr>
+        <tr>
+          <td><label for="password">Password : </label></td>
+          <td colspan="3"><input type="password" id="password" placeholder="Password"></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email : </label></td>
+          <td colspan="3"><input type="email" id="email" placeholder="Email"></td>
+        </tr>
+        <tr>
+          <td><label for="mobile-no">Mobile no. : </label></td>
+          <td colspan="3"><input type="number" id="mobile-no" placeholder="Mobile Number"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><button id="edit">EDIT</button><button id="save">SAVE</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+{% endblock %}
