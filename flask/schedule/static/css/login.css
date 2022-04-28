@@ -58,7 +58,7 @@ header {
 
 .container {
   height: 300px;
-  width: 400px;
+  width: 450px;
   border-radius: 10px;
   background-color: var(--l1blue);
   position: absolute;

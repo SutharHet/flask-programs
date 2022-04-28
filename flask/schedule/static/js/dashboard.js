@@ -3,7 +3,7 @@ $(document).ready(() => {
   timezone = ''
   let DateTime = luxon.DateTime
   sessionStorage.removeItem("taskId")
-
+  limit = $('#limit').val()
 
   let getCookie = (cname) => {
     let name = cname + "=";
@@ -49,23 +49,33 @@ $(document).ready(() => {
       success: (res) => {
         data = res.data
         days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-        $('.container').children().not('h3').remove();
-        for(let i=0; i < data.length; i++){
-          taskDays = data[i].days.split(',')
-          for(let j=0; j < taskDays.length; j++){
+        $('tbody').html('')
+        
+        let count = 0
+        loop1:
+        for(let j=0; j < days.length; j++){
+          loop2:
+          for(let i=0; i < data.length; i++){
 
             times = getTimes(data[i].start_time, data[i].end_time)
-            
-            $("#"+taskDays[j]+"-tasks").append(`
-              <div class=\"task-card\"> 
-                <p class=\"task\">`+data[i].task+`</p> 
-                <p class=\"task-datetime\">`+times[0]+` TO `+times[1]+`</p>
-                <div class=\"btns\"> 
-                  <button id=\"e`+data[i].task_id+`\">Edit</button> 
-                  <button id=\"d`+data[i].task_id+`\">Del</button> 
-                </div>
-              </div>
-            `)
+            if(data[i].days.includes(days[j])){
+              if(count < limit){
+                count++
+              }else{
+                break loop1;
+              }
+              
+              $('tbody').append(`
+                <tr>
+                  <td>`+data[i].task+`</td>
+                  <td>`+days[j]+`</td>
+                  <td>`+times[0]+`</td>
+                  <td>`+times[1]+`</td>
+                  <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
+                  <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
+                </tr>
+              `)
+            }
           }
         }
       },
@@ -109,6 +119,12 @@ $(document).ready(() => {
 
   checkCookie()
 
+
+  $('#set-limit').on("click", (event) => {
+    limit = $('#limit').val()
+    getWeeklyData()
+  })
+
   let deleteWeeklyData = (id) => {
     let obj = {
       type: "DELETE",
@@ -117,7 +133,7 @@ $(document).ready(() => {
         'x-access-token': token
       },
       success: () => {
-        getData()  
+        getWeeklyData()  
       },
       error: (res) => {
         resJson = res.responseJSON
@@ -129,7 +145,7 @@ $(document).ready(() => {
 
   let editWeeklyData = (id) => {
     sessionStorage.setItem("taskId", id)
-    window.location.replace("http://127.0.0.1:5000/add-task")  
+    window.location.replace("http://127.0.0.1:5000/add-weekly-task")  
   }
 
   $(".chosen-select").chosen({
@@ -137,15 +153,7 @@ $(document).ready(() => {
   })
   
   $("body").on("click","#clear-btn", (event) => {
-    $('.container').css('display', 'flex')
-    $('.container').css('margin-top', '20px')
-    $('#sunday-tasks').css('margin-top', '340px')
     getWeeklyData()
-
-    // days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-    // for(let i=0; i< days.length; i++){
-    //   $("#days option[value='"+days[i]+"'").attr("selected", "false")
-    // }
   })
   $("body").on("click","#filter-btn", (event) => {
 
@@ -157,40 +165,34 @@ $(document).ready(() => {
       },
       success: (res) => {
         data = res.data
-        console.log(data)
-        $('.container').children().not('h3').remove();
+        
+        $('#week-tasks').html(`
+          <tr>
+            <th>Task</th>
+            <th>day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th></th>
+            <th></th>
+          </tr>
+        `)
+        
         for(let i=0; i < data.length; i++){
           taskDays = String($('#days').val()).split(',')
           for(let j=0; j < taskDays.length; j++){
 
             if(data[i].days.includes(taskDays[j])){
               
-            $("#"+taskDays[j]+"-tasks").append(`
-              <div class=\"task-card\"> 
-                <p class=\"task\">`+data[i].task+`</p> 
-                <p class=\"task-datetime\">`+times[0]+` TO `+times[1]+`</p>
-                <div class=\"btns\"> 
-                  <button id=\"e`+data[i].task_id+`\">Edit</button> 
-                  <button id=\"d`+data[i].task_id+`\">Del</button> 
-                </div>
-              </div>
-            `)
-            }
-          }
-        }
-
-        days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-        let count = 0
-        for(let i=0; i< days.length; i++){
-          console.log()
-          if($('#'+days[i]+'-tasks').has('div').length === 0){
-            $('#'+days[i]+'-tasks').css('display', 'none')
-          }else{
-            $('#'+days[i]+'-tasks').css('display', 'flex')
-            if(count === 0){
-              console.log('here')
-              $('#'+days[i]+'-tasks').css('margin-top', '350px')
-              count = 1
+              $('#week-tasks').append(`
+                <tr>
+                  <td>`+data[i].task+`</td>
+                  <td>`+taskDays[j]+`</td>
+                  <td>`+times[0]+`</td>
+                  <td>`+times[1]+`</td>
+                  <td><button id=\"e`+data[i].task_id+`\">Edit</button></td>
+                  <td><button id=\"d`+data[i].task_id+`\">Del</button></td>
+                </tr>
+              `)
             }
           }
         }
@@ -204,7 +206,7 @@ $(document).ready(() => {
 
   })
 
-  $(".container").on("click","button",(event) => {
+  $("table").on("click","button",(event) => {
     let btnId = event.target.id
     let method = btnId.charAt(0)
     let id = btnId.substring(1)

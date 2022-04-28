@@ -33,11 +33,28 @@
     <button id="filter-btn">Filter</button>
   </div>
 
-  <div id="sunday-tasks" class="container"><h3>SUNDAY TASKS: </h3></div>
-  <div id="monday-tasks" class="container"><h3>MONDAY TASKS: </h3></div>
-  <div id="tuesday-tasks" class="container"><h3>TUESDAY TASKS: </h3></div>
-  <div id="wednesday-tasks" class="container"><h3>WEDNESDAY TASKS: </h3></div>
-  <div id="thursday-tasks" class="container"><h3>THURSDAY TASKS: </h3></div>
-  <div id="friday-tasks" class="container"><h3>FRIDAY TASKS: </h3></div>
-  <div id="saturday-tasks" class="container"><h3>SATURDAY TASKS: </h3></div>
+  <div class="container col-xl-12">
+    <div class="limit-input">
+      <label for="limit">Limit : </label>
+      <input type="number" id="limit" placeholder="limit" value="10">
+      <button class="btn btn-primary" id="set-limit">Set</button>
+    </div>
+    <div class="table-responsive">
+      <table id="week-tasks" class="table table-striped">
+        <thead  class="thead-dark">
+          <tr>
+            <th>Task</th>
+            <th>day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

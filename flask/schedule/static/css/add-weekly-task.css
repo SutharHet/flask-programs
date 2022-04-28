@@ -78,14 +78,18 @@ header {
   z-index: -1;
   padding: 10px;
 }
-
-.container-top {
-  height: 30%;
-  width: 90%;
+.container-top{
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
-  align-content: space-around
+  align-items: center;
+}
+select[multiple] {
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  overflow: hidden;
+  background-color: var(--l1blue);
+  outline: none;
 }
 
 .chosen-select {

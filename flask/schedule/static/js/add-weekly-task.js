@@ -105,22 +105,18 @@ $(document).ready(() => {
 
   checkCookie()
 
-  $(".chosen-select").chosen({
-    no_results_text: "Oops, nothing found!"
-  })
+  $("#days").mousedown((e) => {
+    e.preventDefault();
 
-  // $("select").mousedown((e) => {
-  //   e.preventDefault();
+    var select = this;
+    var scroll = select.scrollTop;
 
-  //   var select = this;
-  //   var scroll = select.scrollTop;
+    e.target.selected = !e.target.selected;
 
-  //   e.target.selected = !e.target.selected;
+    setTimeout(function(){select.scrollTop = scroll;}, 0);
 
-  //   setTimeout(function(){select.scrollTop = scroll;}, 0);
-
-  //   $(select ).focus();
-  // }).mousemove(function(e){e.preventDefault()});  
+    $(select ).focus();
+  }).mousemove(function(e){e.preventDefault()});  
 
   $("#add").click(()=>{
     let obj = {}

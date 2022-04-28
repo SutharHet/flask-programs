@@ -9,8 +9,6 @@ from cryptography.fernet import Fernet
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-from sympy import print_latex
 import p_data
 import pymysql
     
@@ -292,7 +290,7 @@ def user_api(current_user):
         'mobile_no': user.mobile_no,
         'timezone': user.timezone
       }
-
+      
       return ({'message': 'User data successfuly retrived', 'data': data}, 200)
     except:
       return ({'message': 'Error getting user'}, 500)
@@ -345,7 +343,7 @@ def schedules_api(current_user):
         'start_time': task.start_time,
         'end_time': task.end_time
         })
-
+        
       return ({'message': 'Schedule successfuly retrived', 'data': data}, 200)
     except:
       return ({'message': 'Error getting schedule'}, 500)
