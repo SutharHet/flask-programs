@@ -3,7 +3,7 @@ $(document).ready(() => {
   timezone = ''
   let DateTime = luxon.DateTime
   sessionStorage.removeItem("taskId")
-  limit = $('#limit').val()
+  let dataRows = []
 
   let getCookie = (cname) => {
     let name = cname + "=";
@@ -39,6 +39,29 @@ $(document).ready(() => {
     
     return [startTime, endTime]
   }
+
+  let paginate = (dataRows) => {
+    
+    $('tbody').children().remove()
+    $('.page-no').pagination({
+      dataSource: dataRows,
+      pageSize: 10,
+      pageNumber: 1,
+      showGoInput: true,
+      showGoButton: true,
+      autoHidePrevious: true,
+      autoHideNext: true,
+      showPageNumbers: true,
+      showPrevious:true,
+      showNext:true,
+      className: 'paginationjs-theme-blue',
+      callback: function(data, pagination) {
+          $('tbody').html(data);
+      }
+    })
+
+    $('.J-paginationjs-go-button').addClass("btn")
+  }
   let getWeeklyData = () => {
     let obj ={
       type: "GET",
@@ -50,23 +73,17 @@ $(document).ready(() => {
         data = res.data
         days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
         $('tbody').html('')
-        
-        let count = 0
-        loop1:
+        dataRows = []
+        count = 1
         for(let j=0; j < days.length; j++){
-          loop2:
           for(let i=0; i < data.length; i++){
 
             times = getTimes(data[i].start_time, data[i].end_time)
             if(data[i].days.includes(days[j])){
-              if(count < limit){
-                count++
-              }else{
-                break loop1;
-              }
-              
-              $('tbody').append(`
+              // dataRows.push
+              dataRows.push(`
                 <tr>
+                  <th scope="row">`+count+`</th>
                   <td>`+data[i].task+`</td>
                   <td>`+days[j]+`</td>
                   <td>`+times[0]+`</td>
@@ -75,9 +92,12 @@ $(document).ready(() => {
                   <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
                 </tr>
               `)
+              count++
             }
           }
+          
         }
+        paginate(dataRows)  
       },
       error: (res) => {
         resJson = res.responseJSON
@@ -120,11 +140,6 @@ $(document).ready(() => {
   checkCookie()
 
 
-  $('#set-limit').on("click", (event) => {
-    limit = $('#limit').val()
-    getWeeklyData()
-  })
-
   let deleteWeeklyData = (id) => {
     let obj = {
       type: "DELETE",
@@ -156,7 +171,11 @@ $(document).ready(() => {
     getWeeklyData()
   })
   $("body").on("click","#filter-btn", (event) => {
-
+    taskDays = String($('#days').val()).split(',')
+    console.log(taskDays)
+    if(taskDays[0] == 'null'){
+      getWeeklyData()
+    }
     let obj ={
       type: "GET",
       url: "/schedules",
@@ -165,37 +184,31 @@ $(document).ready(() => {
       },
       success: (res) => {
         data = res.data
-        
-        $('#week-tasks').html(`
-          <tr>
-            <th>Task</th>
-            <th>day</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th></th>
-            <th></th>
-          </tr>
-        `)
-        
-        for(let i=0; i < data.length; i++){
-          taskDays = String($('#days').val()).split(',')
-          for(let j=0; j < taskDays.length; j++){
+        dataRows = []
 
+        count = 1
+
+        for(let i=0; i < data.length; i++){
+          for(let j=0; j < taskDays.length; j++){
             if(data[i].days.includes(taskDays[j])){
               
-              $('#week-tasks').append(`
+              dataRows.push(`
                 <tr>
+                  <th scope="row">`+count+`</th>
                   <td>`+data[i].task+`</td>
                   <td>`+taskDays[j]+`</td>
                   <td>`+times[0]+`</td>
                   <td>`+times[1]+`</td>
-                  <td><button id=\"e`+data[i].task_id+`\">Edit</button></td>
-                  <td><button id=\"d`+data[i].task_id+`\">Del</button></td>
+                  <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
+                  <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
                 </tr>
               `)
+              count++
             }
           }
         }
+
+        paginate(dataRows)
       },
       error: (res) => {
         resJson = res.responseJSON
@@ -214,7 +227,13 @@ $(document).ready(() => {
     if(method == "e"){
       editWeeklyData(id)
     }else{
-      deleteWeeklyData(id)
+      $("#delete-task-modal").modal("show");
+
+      $('#delete-task-modal .modal-footer button').one('click', function(event) {
+        if($(event.target)[0].id == "confirm-delete"){
+          deleteWeeklyData(id)
+        }
+      })
     }
   })
 

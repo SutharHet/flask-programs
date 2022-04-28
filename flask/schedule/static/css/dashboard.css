@@ -103,12 +103,6 @@ header {
   display: flex;
   cursor: pointer;
 }
-
-.container{
-  margin-top: 100px;
-  margin-bottom: 20px;
-}
-
 #filter{
   min-height: 50px;
   position: absolute;
@@ -126,17 +120,6 @@ header {
   font-size: 15px;
   margin-bottom: 100px;
   z-index: 2;
-}
-input {
-  border: none;
-  border-bottom: 2px solid var(--l4blue);
-  height: 30px;
-  width: 60%;
-  margin-top: 20px;
-  color: var(--l4blue);
-  background-color: transparent;
-  font-size: 15px;
-  outline: none;
 }
 
 #filter-btn {
@@ -186,6 +169,8 @@ input {
   position: absolute;
   top: 30%;
   left: 50%;
+  margin-top: 100px;
+  margin-bottom: 10px;
   transform: translate(-50%, 0);
   z-index: 1;
   display: flex;
@@ -193,37 +178,45 @@ input {
   flex-wrap: wrap;
 }
 
-.limit-input{
-  margin-left: 20px;
+.table-responsive{
+  margin: 10px;
+  border: none;
 }
 
+.paginationjs-pages{
+  display: inline-block;
+}
 
-@media only screen and (max-width: 700px) {
-  .task-card{
-    width: 90%;
-    height: 70px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-  }
+.page-no li {
+  display: inline;
+  margin: 5px 15px;
+}
 
-  .task {
-    font-size: 20px;
-  }
-  
-  .task-card .btns {
-    width: 110px;
-    height: 15px;
-  }
-  
-  .task-card .task-datetime {
-    font-size: 15px;
-    margin-top: 5px;
-  }
-  
-  .task-card .btns button {
-    width: 40px;
-    height: 15px;
-    font-size: 15px;
-  }
+.page-no ul {
+  display: inline-block;
+}
+
+.page-no input {
+  width: 30px;
+  height: 30px;
+  outline: none;
+  text-align: center;
+}
+.paginationjs-go-input{
+  display: inline-block;
+  margin: 5px 5px;
+}
+
+.paginationjs-go-button{
+  display: inline-block;
+  margin: 5px 5px;
+}
+.page-no .J-paginationjs-go-button{
+  width: 50px;
+  border: 1px solid black;
+}
+
+.modal-backdrop {
+  background-color: black;
+  opacity: 0.7;
 }

@@ -3,6 +3,7 @@ $(document).ready(() => {
   timezone = ''
   let DateTime = luxon.DateTime
   sessionStorage.removeItem("taskId")
+  dataRows = []
 
   $('#start_time').val('00:00')
   $('#end_time').val('00:00')
@@ -32,6 +33,28 @@ $(document).ready(() => {
     window.location.replace("http://127.0.0.1:5000/dashboard")    
   })
 
+  let paginate = (dataRows) => {
+    $('tbody').children().remove()
+    $('.page-no').pagination({
+      dataSource: dataRows,
+      pageSize: 10,
+      pageNumber: 1,
+      showGoInput: true,
+      showGoButton: true,
+      autoHidePrevious: true,
+      autoHideNext: true,
+      showPageNumbers: true,
+      showPrevious:true,
+      showNext:true,
+      className: 'paginationjs-theme-blue',
+      callback: function(data, pagination) {
+          $('tbody').html(data);
+      }
+    })
+
+    $('.J-paginationjs-go-button').addClass("btn")
+  }
+
   let getDateTimeData = () => {
     let obj ={
       type: "GET",
@@ -42,7 +65,9 @@ $(document).ready(() => {
       success: (res) => {
         data = res.data
         days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-        $('.container').children().not('h3').remove();
+        dataRows = []
+        count = 1
+
         for(let i=0; i < data.length; i++){
           startDate = DateTime.fromISO(data[i].start_datetime, { zone: timezone })
           endDate = DateTime.fromISO(data[i].end_datetime, { zone: timezone })
@@ -50,17 +75,20 @@ $(document).ready(() => {
           startDateTime = startDate.toLocaleString(DateTime.DATETIME_MED)
           endDateTime = endDate.toLocaleString(DateTime.DATETIME_MED)
 
-          $(".container").append(`
-            <div class=\"task-card\">
-              <p class=\"task\">`+data[i].task+`</p> 
-              <p class=\"task-datetime\">`+startDateTime+` TO `+endDateTime+`</p>
-              <div class=\"btns\"> 
-                <button id=\"e`+data[i].task_id+`\">Edit</button> 
-                <button id=\"d`+data[i].task_id+`\">Del</button> 
-              </div>
-            </div>
+          dataRows.push(`
+            <tr>
+              <th scope="row">`+count+`</th>
+              <td>`+data[i].task+`</td>
+              <td>`+startDateTime+`</td>
+              <td>`+endDateTime+`</td>
+              <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
+              <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
+            </tr>
           `)
+          count++
         }
+        
+        paginate(dataRows)
       },
       error: (res) => {
         resJson = res.responseJSON
@@ -126,23 +154,15 @@ $(document).ready(() => {
   }
 
   $("#filter").on("click","#clear-btn", (event) => {
-    $('#start_date').val('')
-    $('#end_date').val('') 
-    
-    $('#start_time').val('00:00')
-    $('#end_time').val('00:00') 
-
     getDateTimeData() 
   })
 
   $("#filter").on("click","#filter-btn", (event) => {
-    startDate = $('#start_date').val()+'T'+$('#start_time').val()
-    endDate = $('#end_date').val()+'T'+$('#end_time').val()
+    startDate = $('#start_datetime').val()
+    endDate = $('#end_datetime').val()
 
     utcStartDate = ''
-    console.log(startDate.charAt(0), startDate.charAt(0) !== 'T')
     if (startDate.charAt(0) !== 'T'){
-      console.log('here')
       startDate = DateTime.fromISO(startDate, { zone: timezone })
       utcStartDate = startDate.toUTC().toISO()
     }
@@ -153,7 +173,6 @@ $(document).ready(() => {
       utcEndDate = endDate.toUTC().toISO()
     }
     
-    console.log(utcStartDate, utcEndDate)
     let obj ={
       type: "GET",
       url: "/datetime/filter/schedule",
@@ -166,8 +185,9 @@ $(document).ready(() => {
       },
       success: (res) => {
         data = res.data
-        console.log(data)
-        $('.container').children().remove();
+        dataRows = []
+        count = 1
+
         for(let i=0; i < data.length; i++){
           startDate = DateTime.fromISO(data[i].start_datetime, { zone: timezone })
           endDate = DateTime.fromISO(data[i].end_datetime, { zone: timezone })
@@ -175,17 +195,20 @@ $(document).ready(() => {
           startDateTime = startDate.toLocaleString(DateTime.DATETIME_MED)
           endDateTime = endDate.toLocaleString(DateTime.DATETIME_MED)
 
-          $(".container").append(`
-            <div class=\"task-card\">
-              <p class=\"task\">`+data[i].task+`</p> 
-              <p class=\"task-datetime\">`+startDateTime+` TO `+endDateTime+`</p>
-              <div class=\"btns\"> 
-                <button id=\"e`+data[i].task_id+`\">Edit</button> 
-                <button id=\"d`+data[i].task_id+`\">Del</button> 
-              </div>
-            </div>
+          dataRows.push(`
+          <tr>
+            <th scope="row">`+count+`</th>
+            <td>`+data[i].task+`</td>
+            <td>`+startDateTime+`</td>
+            <td>`+endDateTime+`</td>
+            <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
+            <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
+          </tr>
           `)
+          count++
         }
+
+        paginate(dataRows)
       },
       error: (res) => {
         resJson = res.responseJSON
@@ -193,7 +216,6 @@ $(document).ready(() => {
       }
     }
     if(utcStartDate !== ''){
-      console.log('here')
       $.ajax(obj)
     }
 
@@ -207,7 +229,14 @@ $(document).ready(() => {
     if(method == "e"){
       editDateTimeData(id)
     }else{
-      deleteDateTimeData(id)
+      $("#delete-task-modal").modal("show");
+
+      $('#delete-task-modal .modal-footer button').one('click', (event) => {
+        if($(event.target)[0].id == "confirm-delete"){
+          deleteDateTimeData(id)
+        }
+      })
+      
     }
   })
 
