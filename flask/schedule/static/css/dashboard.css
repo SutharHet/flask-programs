@@ -170,17 +170,9 @@ header {
   top: 30%;
   left: 50%;
   margin-top: 100px;
-  margin-bottom: 10px;
   transform: translate(-50%, 0);
   z-index: 1;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.table-responsive{
-  margin: 10px;
-  border: none;
+  padding: 10px;
 }
 
 .paginationjs-pages{

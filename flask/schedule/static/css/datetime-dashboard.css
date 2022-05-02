@@ -113,9 +113,14 @@ header {
   z-index: 1;
 }
 
-
-.table-responsive{
-  margin: 10px;
+.container {
+  border-radius: 10px;
+  position: relative;
+  background-color: aliceblue;
+  /* margin: auto 20px; */
+  margin-top: 300px;
+  z-index: 1;
+  padding: 10px;
 }
 
 .paginationjs-pages{
@@ -209,17 +214,7 @@ header {
   background-color: var(--l4blue);
 }
 
-.container {
-  border-radius: 10px;
-  position: relative;
-  background-color: aliceblue;
-  /* margin: auto 20px; */
-  margin-top: 300px;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+
 
 .modal-backdrop {
   background-color: black;

@@ -511,7 +511,6 @@ def datetime_filter_schedule_api(current_user):
       print(e)
       return ({'message': 'Error getting schedule'}, 500)
 
-
 # GET, PUT, DELETE datetime tasks with token
 @app.route('/datetime/tasks/<int:taskId>', methods=["GET", "PUT", "DELETE"])
 @token_required
@@ -609,7 +608,7 @@ def forgot_password(token):
       return ({'message': 'Used Token'})
 
   except jwt.ExpiredSignatureError:
-    return ({"message": 'Token expired'})  
+    return ({"message": 'Token expired'})
 
 # PUT / reset password
 @app.route('/reset-password', methods=['PUT'])

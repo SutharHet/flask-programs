@@ -82,7 +82,7 @@ $(document).ready(() => {
               <td>`+startDateTime+`</td>
               <td>`+endDateTime+`</td>
               <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
-              <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
+              <td><button id=\"d`+data[i].task_id+`\" class="btn btn-danger">Del</button></td>
             </tr>
           `)
           count++
@@ -202,7 +202,7 @@ $(document).ready(() => {
             <td>`+startDateTime+`</td>
             <td>`+endDateTime+`</td>
             <td><button id=\"e`+data[i].task_id+`\" class="btn btn-primary">Edit</button></td>
-            <td><button id=\"d`+data[i].task_id+`\" class="btn btn-warning">Del</button></td>
+            <td><button id=\"d`+data[i].task_id+`\" class="btn btn-danger">Del</button></td>
           </tr>
           `)
           count++
